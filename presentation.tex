@@ -86,11 +86,154 @@
 
 \maketitle
 
+
+\imageframe[scale=0.9]{joint-action-scenario}
+
+\begin{frame}{'Classical' joint action}
+    \begin{itemize}
+        \item establishing a joint goal
+        \item planning for the robot
+        \item planning for the human in order to set the expectations
+        \item executing the plans
+        \item monitoring progress of the partner towards the goal
+    \end{itemize}
+
+    \pause
+
+    \begin{itemize}
+        \item joint plans: how to communicate them?
+        \item how to deal with the human's own plans?
+        \item monitoring/recognising error situations
+        \item recognise when we're going 'off track'
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{How do humans perform tasks together?}
+
+    Collaborating is a costly socio-cognitive activity.
+
+    Humans are good at it. They are also really good at minimizing the cost
+    involved.
+    
+    The key mecanism here is: prefer implict to explicit!
+\end{frame}
+
+{\paper{Work by Chris Wallbridge}
+\begin{frame}{One example: grounding of spatial language}
+
+    \begin{center}
+        \includegraphics[width=0.9\linewidth]{ambiguous-desc/RefMap}
+    \end{center}
+
+    Ambiguities arise easily when describing spatial scenes.
+
+    How do you solve them?
+\end{frame}
+
+\imageframe[color=black]{ambiguous-desc/NosePointCropped}
+
+\imageframe{ambiguous-desc/LanguageUse}
+
+
+\begin{frame}{}
+    \begin{itemize}
+        \item \emph{Ambiguous-Descriptive}: These statements provide details on
+        the position of the object, but refer to more than one location,
+        e.g. "The zebra is on a bridge."
+        \item \emph{Contextual}: These are statements that follow on from a pre-
+        vious statement or action, and would make no sense to a 3rd
+        party who entered the conversation at the time the statement
+        was made, e.g. "The other one."
+        \item \emph{Negation}: This is when no statement is made other than to
+        indicate the location chosen was incorrect, e.g."No".
+        \item \emph{Non-Ambiguous}: These statements can only refer to one pos-
+        sible location, e.g. "The lion is in the big sand pit."
+    \end{itemize}
+\end{frame}
+}
+
+{\paper{Clark and Wilkes-Gibbs, \emph{Referring as a collaborative
+process}, Cognition 1986 \newline Pickering and Garrod, \emph{Alignment as the basis for successful
+communication}, Research on Language and Computation 2006}
+\begin{frame}{Theoretical foundations: surface alignement; grounding criterion}
+
+    Psycholinguistics provides a lot of the foundational work on these
+    questions.
+
+    \begin{itemize}
+        \item Communication is a dynamic social process: the partner often to signal
+            missing/misunderstood informations
+        \item Repairing is generally less costly than avoiding ambiguities in
+            the first place
+        \item Participants aim at reaching a \emph{grounding criterion}, ie
+            \emph{enough} mutual understanding for the task
+        \item $\Rightarrow$ we typically reach only partial (or surface)
+            alignement -- full alignment is typically not required
+    \end{itemize}
+\end{frame}
+}
+
+\begin{frame}{In social Human-Robot interaction}
+    
+    The problem has been studied quite a lot in communication ($\rightarrow$ back-channeling)
+
+    Can we expand this line of thought to sHRI in general?
+
+    Most of our social and behavioural alignment comes from sub-conscious social
+    mechanisms:
+
+    \begin{itemize}
+        \item entrainment (coupling), 
+        \item mimicry, 
+        \item implicit turn-taking,
+        \item joint attention
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Our roadmap}
+
+    \begin{itemize}
+        \item Do not be scared of ambiguous/partially defined instructions (as
+            long as you can recognise grounding errors and requests for
+            clarification!)
+        \item $\rightarrow$ recognising \emph{grounding errors} should be
+            research priority
+        \item to reduce the socio-cognitive cost of collaboration, rely as much
+            as possible on implicit (sub-conscious) social mechanisms
+    \end{itemize}
+
+\end{frame}
+
+\begin{frame}{The problem}
+    \begin{itemize}
+        \item These mecanisms are unfortunately often ill-defined, and
+            particularly difficult to turn into equations (or controllers, in
+            our case)
+        \item $\Rightarrow$ data-driven approaches
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Work-In-Progress}
+
+    \begin{itemize}
+        \item SPARC: transfering social skills from a human expert to an autonomous robot
+        \item PInSoRo: learning to recognise complex social situations from
+            child-child interactions
+    \end{itemize}
+
+\end{frame}
+
 \section{SPARC}
 
+\imageframe[scale=0.9]{sparc/sparc}
+\imageframe[color=black,caption={$| state | = 210; | action\_space| = 655$}]{sparc/gui}
 \imageframe[color=black]{sparc/overview}
-\imageframe[color=black]{sparc/gui}
 \imageframe[color=black]{sparc/woz-gui}
+\imageframe[caption={Overall performance (pre-, mid-, post-test)},scale=0.9]{sparc/perf}
+\imageframe[caption={Learning-related game actions}, scale=0.9]{sparc/d_eat}
+\imageframe[caption={A diversity of actions selected by the robot},scale=0.9]{sparc/actions}
+
+\imageframe[caption={Take-home message for joint-action}, scale=0.9]{sparc/sparc}
 
 %\begin{frame}<1>[plain,label=whatsnext]{}
 %
