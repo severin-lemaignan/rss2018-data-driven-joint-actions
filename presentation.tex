@@ -64,8 +64,8 @@
 %--------------------------------------------------------------------------
 % General presentation settings
 %--------------------------------------------------------------------------
-\title{data-driven social dynamics}
-\subtitle{two approaches towards socially-aware joint actions}
+\title{joint action: what's underneath the models?}
+\subtitle{bringing implicit social dynamics into the picture}
 \date{{\bf  towards a framework for joint action}@RSS18 -- 29 Jun. 2018}
 \author{Séverin Lemaignan}
 \institute{{\bf Bristol Robotics Lab} University of the West of England}
@@ -89,37 +89,58 @@
 
 \imageframe[scale=0.9]{joint-action-scenario}
 
-\begin{frame}{'Classical' joint action}
-    \begin{itemize}
+{
+    \paper{Lemaignan et al. {\bf Artificial Cognition for Social Human-Robot
+    Interaction: An Implementation} Artificial Intelligence 2017}
+\begin{frame}{Model-based joint action}
+    \begin{enumerate}
         \item establishing a joint goal
         \item planning for the robot
         \item planning for the human in order to set the expectations
         \item executing the plans
         \item monitoring progress of the partner towards the goal
-    \end{itemize}
+    \end{enumerate}
 
     \pause
 
+    $\Rightarrow$ {\bf explicit cognitive steps}
+    \pause
+
+    \emph{hard, though:
     \begin{itemize}
-        \item joint plans: how to communicate them?
-        \item how to deal with the human's own plans?
+        \item how to communicate/agree on goals \& plans?
+        \item what about the human's own plans?
         \item monitoring/recognising error situations
-        \item recognise when we're going 'off track'
+        \item what to do when we're going 'off track'?
+        \item ...and many more!
     \end{itemize}
+    }
 \end{frame}
+}
 
 \begin{frame}{How do humans perform tasks together?}
 
-    Collaborating is a costly socio-cognitive activity.
 
+    \begin{center}
+        {\bf Collaborating is a costly socio-cognitive activity}.
+
+    \pause
     Humans are good at it. They are also really good at minimizing the cost
     involved.
+    \pause
     
-    The key mecanism here is: prefer implict to explicit!
+        The key mecanism: {\bf prefer implict to explicit}!
+
+    \pause
+
+        ...which is closely related to: {\bf attempt first simple
+        -- yet possibly ambiguous -- actions, and repair only when needed}
+    \end{center}
+        
 \end{frame}
 
-{\paper{Work by Chris Wallbridge}
 \begin{frame}{One example: grounding of spatial language}
+
 
     \begin{center}
         \includegraphics[width=0.9\linewidth]{ambiguous-desc/RefMap}
@@ -128,6 +149,8 @@
     Ambiguities arise easily when describing spatial scenes.
 
     How do you solve them?
+
+    \badge{chris}
 \end{frame}
 
 \imageframe[color=black]{ambiguous-desc/NosePointCropped}
@@ -135,47 +158,46 @@
 \imageframe{ambiguous-desc/LanguageUse}
 
 
-\begin{frame}{}
-    \begin{itemize}
-        \item \emph{Ambiguous-Descriptive}: These statements provide details on
-        the position of the object, but refer to more than one location,
-        e.g. "The zebra is on a bridge."
-        \item \emph{Contextual}: These are statements that follow on from a pre-
-        vious statement or action, and would make no sense to a 3rd
-        party who entered the conversation at the time the statement
-        was made, e.g. "The other one."
-        \item \emph{Negation}: This is when no statement is made other than to
-        indicate the location chosen was incorrect, e.g."No".
-        \item \emph{Non-Ambiguous}: These statements can only refer to one pos-
-        sible location, e.g. "The lion is in the big sand pit."
-    \end{itemize}
-\end{frame}
-}
+%\begin{frame}{}
+%    \begin{itemize}
+%        \item \emph{Ambiguous-Descriptive}: These statements provide details on
+%        the position of the object, but refer to more than one location,
+%        e.g. "The zebra is on a bridge."
+%        \item \emph{Contextual}: These are statements that follow on from a pre-
+%        vious statement or action, and would make no sense to a 3rd
+%        party who entered the conversation at the time the statement
+%        was made, e.g. "The other one."
+%        \item \emph{Negation}: This is when no statement is made other than to
+%        indicate the location chosen was incorrect, e.g."No".
+%        \item \emph{Non-Ambiguous}: These statements can only refer to one pos-
+%        sible location, e.g. "The lion is in the big sand pit."
+%    \end{itemize}
+%\end{frame}
 
 {\paper{Clark and Wilkes-Gibbs, \emph{Referring as a collaborative
 process}, Cognition 1986 \newline Pickering and Garrod, \emph{Alignment as the basis for successful
 communication}, Research on Language and Computation 2006}
-\begin{frame}{Theoretical foundations: surface alignement; grounding criterion}
+\begin{frame}{surface alignement; grounding criterion}
 
     Psycholinguistics provides a lot of the foundational work on these
     questions.
 
     \begin{itemize}
-        \item Communication is a dynamic social process: the partner often to signal
+        \item<+-> \emph{Communication is a dynamic social process}: the partner often to signal
             missing/misunderstood informations
-        \item Repairing is generally less costly than avoiding ambiguities in
+        \item<+-> Repairing is generally less costly than avoiding ambiguities in
             the first place
-        \item Participants aim at reaching a \emph{grounding criterion}, ie
+        \item<+-> You only ever need to reach the \emph{grounding criterion}, ie
             \emph{enough} mutual understanding for the task
-        \item $\Rightarrow$ we typically reach only partial (or surface)
-            alignement -- full alignment is typically not required
+        \item<+-> $\Rightarrow$ we typically only reach \emph{partial (or surface)
+            alignement} -- full alignment is usually not required
     \end{itemize}
 \end{frame}
 }
 
 \begin{frame}{In social Human-Robot interaction}
     
-    The problem has been studied quite a lot in communication ($\rightarrow$ back-channeling)
+    Well studied in communication (cf back-channeling)
 
     Can we expand this line of thought to sHRI in general?
 
@@ -188,20 +210,8 @@ communication}, Research on Language and Computation 2006}
         \item implicit turn-taking,
         \item joint attention
     \end{itemize}
-\end{frame}
-
-\begin{frame}{Our roadmap}
-
-    \begin{itemize}
-        \item Do not be scared of ambiguous/partially defined instructions (as
-            long as you can recognise grounding errors and requests for
-            clarification!)
-        \item $\rightarrow$ recognising \emph{grounding errors} should be
-            research priority
-        \item to reduce the socio-cognitive cost of collaboration, rely as much
-            as possible on implicit (sub-conscious) social mechanisms
-    \end{itemize}
-
+    \pause
+    Can we model \& generate them?
 \end{frame}
 
 \begin{frame}{The problem}
@@ -223,14 +233,26 @@ communication}, Research on Language and Computation 2006}
 
 \end{frame}
 
-\section{SPARC}
+\section{Supervision for Progressive Autonomy}
 
-\imageframe[scale=0.9]{sparc/sparc}
-\imageframe[color=black,caption={$| state | = 210; | action\_space| = 655$}]{sparc/gui}
+{
+    \fullbackground[scale=0.9]{sparc/sparc}
+\begin{frame}[plain]
+    \badge{emmanuel}
+\end{frame}
+}
+
+\imageframe[caption={Interactive Reinforcement Learning \newline $\approx$ 10
+000 states;
+5 actions}, color=black]{sparc/sophies}
+
+
+\imageframe[color=black,caption={$state \in [0.;1.]^{210}$ $| action\_space| = 655$}]{sparc/gui}
 \imageframe[color=black]{sparc/overview}
 \imageframe[color=black]{sparc/woz-gui}
 \imageframe[caption={Overall performance (pre-, mid-, post-test)},scale=0.9]{sparc/perf}
 \imageframe[caption={Learning-related game actions}, scale=0.9]{sparc/d_eat}
+\imageframe[scale=0.9]{sparc/actions-supervised}
 \imageframe[caption={A diversity of actions selected by the robot},scale=0.9]{sparc/actions}
 
 \imageframe[caption={Take-home message for joint-action}, scale=0.9]{sparc/sparc}
@@ -339,27 +361,27 @@ communication}, Research on Language and Computation 2006}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section[Free play]{The Free play paradigm}
+\section[Free play]{Social Dynamics of children's free play}
 
-
-\begin{frame}{Free play}
-
-    \begin{center}
-    {\Large ``Just play! Enjoy yourselves!''}
-    \end{center}
-
-    \vspace{3em}
-
-    \begin{itemize}
-        \item \textbf{rich set of cognitive and
-            social dynamics}; importance of motivation/drive; \textbf{uncertain
-            and unexpected situations}
-        \item what is the right action policy? Focus instead on the \textbf{social policy}
-    \end{itemize}
-
-
-\end{frame}
-
+%
+%\begin{frame}{Free play}
+%
+%    \begin{center}
+%    {\Large ``Just play! Enjoy yourselves!''}
+%    \end{center}
+%
+%    \vspace{3em}
+%
+%    \begin{itemize}
+%        \item \textbf{rich set of cognitive and
+%            social dynamics}; importance of motivation/drive; \textbf{uncertain
+%            and unexpected situations}
+%        \item what is the right action policy? Focus instead on the \textbf{social policy}
+%    \end{itemize}
+%
+%
+%\end{frame}
+%
 %\videoframe[0.56]{figs/freeplay/maud-zoe-pilot-edit.mkv?autostart&noaudio}
 %
 %{
@@ -409,29 +431,29 @@ communication}, Research on Language and Computation 2006}
 %    \end{center}
 %\end{frame}
 
-\imageframe[color=black, scale=0.9]{freeplay/sandbox}
+%\imageframe[color=black, scale=0.9]{freeplay/sandbox}
 
 \imageframe{freeplay/freeplay-overview2}
 
 %\imageframe[color=black]{freeplay/freeplay-sandbox-screenshot}
 %\imageframe[color=black]{freeplay/analysis}
 
-
-\begin{frame}{'Sandboxed free play' experimental paradigm}
-
-    \begin{itemize}
-        \item \textbf{Structured methodology} (sandtray) yet \textbf{loosely structured
-            task} (free play)
-        \item<2-> physical playground $\rightarrow$ {\bf replaced by large
-            touchscreen}: escape perception and manipulation in
-            dense \& cluttered scene (but \emph{only} that)
-        \item<3-> importantly, \textbf{perception and interaction with the
-            partner is unimpaired}
-    \end{itemize}
-\end{frame}
-
-
-\imageframe[scale=0.9]{freeplay/setup_top}
+%
+%\begin{frame}{'Sandboxed free play' experimental paradigm}
+%
+%    \begin{itemize}
+%        \item \textbf{Structured methodology} (sandtray) yet \textbf{loosely structured
+%            task} (free play)
+%        \item<2-> physical playground $\rightarrow$ {\bf replaced by large
+%            touchscreen}: escape perception and manipulation in
+%            dense \& cluttered scene (but \emph{only} that)
+%        \item<3-> importantly, \textbf{perception and interaction with the
+%            partner is unimpaired}
+%    \end{itemize}
+%\end{frame}
+%
+%
+%\imageframe[scale=0.9]{freeplay/setup_top}
 
 \begin{frame}{Freeplay sandox in a nutshell}
 
@@ -455,33 +477,33 @@ communication}, Research on Language and Computation 2006}
     \end{itemize}
 \end{frame}
 
-
-\begin{frame}{Social dynamics to be observed}
-
-    \begin{itemize}
-        \item<+-> the \textbf{task engagement}
-            \begin{itemize}
-                \item are the participants 'on task' or not?
-            \end{itemize}
-        \item<+-> the \textbf{interaction flow} \& \textbf{situation awareness}
-            \begin{itemize}
-                \item what is happening \emph{now}? what is the next expected
-                    action?
-            \end{itemize}
-        \item<+-> the \textbf{social attitude}
-            \begin{itemize}
-                \item pro-social, hostile, assertive (‘bossy’), passive...
-            \end{itemize}
-        \item<+-> the \textbf{social dynamics}
-            \begin{itemize}
-                \item entrainment (coupling), mimicry, implicit turn-taking, joint
-                    attention
-            \end{itemize}
-    \end{itemize}
-
-    \pause
-    $\rightarrow$ {\bf paradigm for socio-cognitive investigation}
-\end{frame}
+%
+%\begin{frame}{Social dynamics to be observed}
+%
+%    \begin{itemize}
+%        \item<+-> the \textbf{task engagement}
+%            \begin{itemize}
+%                \item are the participants 'on task' or not?
+%            \end{itemize}
+%        \item<+-> the \textbf{interaction flow} \& \textbf{situation awareness}
+%            \begin{itemize}
+%                \item what is happening \emph{now}? what is the next expected
+%                    action?
+%            \end{itemize}
+%        \item<+-> the \textbf{social attitude}
+%            \begin{itemize}
+%                \item pro-social, hostile, assertive (‘bossy’), passive...
+%            \end{itemize}
+%        \item<+-> the \textbf{social dynamics}
+%            \begin{itemize}
+%                \item entrainment (coupling), mimicry, implicit turn-taking, joint
+%                    attention
+%            \end{itemize}
+%    \end{itemize}
+%
+%    \pause
+%    $\rightarrow$ {\bf paradigm for socio-cognitive investigation}
+%\end{frame}
 
 
 %\section{Sandtray paradigm: more applications}
@@ -521,17 +543,20 @@ communication}, Research on Language and Computation 2006}
          condition; 19min in child-robot condition
     \end{itemize}
 
-\end{frame}
-
-\videoframe[0.56]{figs/mosaic_blend_long.mp4?autostart}
-
-\begin{frame}{Two baselines}
-
     \begin{center}
-        \includegraphics<1>[width=\linewidth]{pinsoro-baselines}
-        \includegraphics<2>[width=\linewidth]{pinsoro-baselines2}
+        Open dataset: \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
     \end{center}
 \end{frame}
+%
+%\videoframe[0.56]{figs/mosaic_blend_long.mp4?autostart}
+%
+%\begin{frame}{Two baselines}
+%
+%    \begin{center}
+%        \includegraphics<1>[width=\linewidth]{pinsoro-baselines}
+%        \includegraphics<2>[width=\linewidth]{pinsoro-baselines2}
+%    \end{center}
+%\end{frame}
 
 %\imageframe[color=black]{freeplay/3d-point-cloud-facial-features}
 
@@ -558,7 +583,7 @@ other           & \multicolumn{2}{l}{static transforms between touchscreen and f
 
 \end{frame}
 
-\videoframe[0.56]{figs/bestof.mp4?autostart}
+%\videoframe[0.56]{figs/bestof.mp4?autostart}
 
 %\begin{frame}{Dataset}
 %    \begin{itemize}
@@ -571,8 +596,8 @@ other           & \multicolumn{2}{l}{static transforms between touchscreen and f
 %    \end{center}
 %\end{frame}
 
-\imageframe[color=black]{freeplay/rviz-faces}
-\videoframe[0.56]{figs/optical_flow.mp4?autostart}
+%\imageframe[color=black]{freeplay/rviz-faces}
+%\videoframe[0.56]{figs/optical_flow.mp4?autostart}
 
 \imageframe[scale=0.95,caption=13000+ annotations]{freeplay/coding-scheme}
 
@@ -580,7 +605,7 @@ other           & \multicolumn{2}{l}{static transforms between touchscreen and f
 Coding scheme for social attitude derives from the Social Communication Coding System (SCCS) 
 }
 
-\imageframe[scale=0.95, color=black]{freeplay/annotator}
+%\imageframe[scale=0.95, color=black]{freeplay/annotator}
 %
 %\begin{frame}{Social annotations}
 %    So far,
@@ -588,29 +613,24 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 %        \item 85\% of the dataset annotated
 %        \item 11500+ annotations
 %        \item average duration of coded episodes: 46 seconds
-%        \item 15\% double-coded
+%        \item 22\% double-coded
 %    \end{itemize}
 %\end{frame}
 %
 
 %\videoframe[0.56]{figs/raw_annotations.mkv?autostart}
 
-\begin{frame}[plain]
-    \Large
-    \begin{center}
-        Anonymised version (5.7GB) available on-line. Grab it now!
-
-        \LARGE \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
-
-        \vspace{3cm}
-            \large Open data! Hosted on EU's  \includegraphics[width=0.3\linewidth]{zenodo}
-    \end{center}
-\end{frame}
-
-\section{Very early results}
-
-\imageframe[caption=Simple RNN network]{pinsoronet/pinsoro-net-v2}
-\imageframe[caption=Trained on 10 epochs x 2M datapoints]{pinsoronet/pinsoronet-v2-accuracy-social-attitude-task-engagement}
+%\begin{frame}[plain]
+%    \Large
+%    \begin{center}
+%        Anonymised version (5.7GB) available on-line. Grab it now!
+%
+%        \LARGE \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
+%
+%        \vspace{3cm}
+%            \large Open data! Hosted on EU's  \includegraphics[width=0.3\linewidth]{zenodo}
+%    \end{center}
+%\end{frame}
 
 
 
@@ -721,6 +741,13 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 
 \section[DNNs for Social Robotics]{Deep learning of social interactions?}
 
+\videoframe[0.56]{figs/kinematics_social_dynamics/2017-06-13-140354392253-laugh.mp4}
+\videoframe[0.56]{figs/kinematics_social_dynamics/raw-2017-06-13-140354392253-laugh.mp4}
+
+\videoframe[1]{figs/kinematics_social_dynamics/2017-06-06-150808383862-fight.mp4}
+\videoframe[1]{figs/kinematics_social_dynamics/raw-2017-06-06-150808383862-fight.mp4}
+
+
 \videoframe[0.56]{figs/annotations.mp4?autostart&start=10}
 
 
@@ -752,6 +779,11 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 
     Social behaviours; Social dynamics: \textbf{generation as well!}
 \end{frame}
+
+\imageframe[caption=Simple RNN network]{pinsoronet/pinsoro-net-v2}
+\imageframe[caption=Trained on 10 epochs x 2M datapoints]{pinsoronet/pinsoronet-v2-accuracy-social-attitude-task-engagement}
+
+
 
 %{
 %    \fullbackground[color=black]{annotations-skel}
@@ -1035,6 +1067,18 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Take home messages for today}
+
+    \begin{itemize}
+        \item<+-> to reduce the socio-cognitive cost of collaboration, rely as much
+            as possible on {\bf implicit (sub-conscious) social mechanisms}
+        \item<+-> do not be scared of ambiguous/partially defined instructions
+        \item<+-> however, {\bf communication dynamics} \& the {\bf recognition of grounding
+            errors} should be research priorities
+    \end{itemize}
+
+\end{frame}
 
 {
     \fullbackground[color=black]{annotations-skel}
