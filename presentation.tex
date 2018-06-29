@@ -14,6 +14,20 @@
 \usepackage{booktabs}
 \usepackage{marvosym}
 
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+
 %--------------------------------------------------------------------------
 % Load theme
 %--------------------------------------------------------------------------
@@ -94,11 +108,11 @@
     Interaction: An Implementation} Artificial Intelligence 2017}
 \begin{frame}{Model-based joint action}
     \begin{enumerate}
-        \item establishing a joint goal
-        \item planning for the robot
-        \item planning for the human in order to set the expectations
-        \item executing the plans
-        \item monitoring progress of the partner towards the goal
+        \item establish a joint goal
+        \item plan for the robot
+        \item plan for the human in order to build a set of priors
+        \item execute the robot plan
+        \item monitor progress of the partner towards the goal
     \end{enumerate}
 
     \pause
@@ -106,13 +120,13 @@
     $\Rightarrow$ {\bf explicit cognitive steps}
     \pause
 
-    \emph{hard, though:
+    \emph{...hard ones, though:
     \begin{itemize}
         \item how to communicate/agree on goals \& plans?
         \item what about the human's own plans?
         \item monitoring/recognising error situations
         \item what to do when we're going 'off track'?
-        \item ...and many more!
+        \item ...many more!
     \end{itemize}
     }
 \end{frame}
@@ -125,16 +139,24 @@
         {\bf Collaborating is a costly socio-cognitive activity}.
 
     \pause
-    Humans are good at it. They are also really good at minimizing the cost
+    Humans are good at it.
+        
+    They are also really good at minimizing the cost
     involved.
     \pause
     
-        The key mecanism: {\bf prefer implict to explicit}!
+        The key mecanism: {\bf prefer implicit to explicit}
 
     \pause
 
-        ...which is closely related to: {\bf attempt first simple
-        -- yet possibly ambiguous -- actions, and repair only when needed}
+        ...which is closely related to: {\bf be lazy}
+        
+        First, go for the simple -- if possibly ambiguous -- actions; and, if
+        really needed, repair
+
+    \pause
+    \vspace{2cm}
+    {\bf What does ``be lazy'' mean for robots?}
     \end{center}
         
 \end{frame}
@@ -144,11 +166,12 @@
 
     \begin{center}
         \includegraphics[width=0.9\linewidth]{ambiguous-desc/RefMap}
-    \end{center}
 
     Ambiguities arise easily when describing spatial scenes.
 
-    How do you solve them?
+    How do we solve them?
+
+    \end{center}
 
     \badge{chris}
 \end{frame}
@@ -209,9 +232,12 @@ communication}, Research on Language and Computation 2006}
         \item mimicry, 
         \item implicit turn-taking,
         \item joint attention
+        \item ...and others
     \end{itemize}
     \pause
+    \begin{center}
     Can we model \& generate them?
+    \end{center}
 \end{frame}
 
 \begin{frame}{The problem}
@@ -219,11 +245,11 @@ communication}, Research on Language and Computation 2006}
         \item These mecanisms are unfortunately often ill-defined, and
             particularly difficult to turn into equations (or controllers, in
             our case)
-        \item $\Rightarrow$ data-driven approaches
+        \item not close-form equation of social interactions $\Rightarrow$ data-driven approaches?
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Work-In-Progress}
+\begin{frame}{2 instances}
 
     \begin{itemize}
         \item SPARC: transfering social skills from a human expert to an autonomous robot
@@ -233,7 +259,7 @@ communication}, Research on Language and Computation 2006}
 
 \end{frame}
 
-\section{Supervision for Progressive Autonomy}
+\section[Learning social behaviours]{Learning social autonomy from humans}
 
 {
     \fullbackground[scale=0.9]{sparc/sparc}
@@ -242,21 +268,52 @@ communication}, Research on Language and Computation 2006}
 \end{frame}
 }
 
-\imageframe[caption={Interactive Reinforcement Learning \newline $\approx$ 10
-000 states;
-5 actions}, color=black]{sparc/sophies}
+\imageframe[caption={Interactive Reinforcement Learning \newline Small state
+space; $| action\_space | = 5$}, color=black]{sparc/sophies}
 
+\begin{frame}{...well, well...}
+    Can we tackle much more complicated cases?
+    \begin{itemize}
+        \item<+-> real robot?
+        \item<+-> real interaction (...with a human!)?
+        \item<+-> continuous interaction?
+        \item<+-> more realistic task (state vector \& action space)?
+        \item<+-> also including social behaviours?
+    \end{itemize}
 
+    \badge{emmanuel}
+\end{frame}
+
+\imageframe[color=black]{sparc/foodchain-game}
 \imageframe[color=black,caption={$state \in [0.;1.]^{210}$ $| action\_space| = 655$}]{sparc/gui}
 \imageframe[color=black]{sparc/overview}
-\imageframe[color=black]{sparc/woz-gui}
-\imageframe[caption={Overall performance (pre-, mid-, post-test)},scale=0.9]{sparc/perf}
+%\imageframe[color=black]{sparc/woz-gui}
+%\imageframe[caption={Overall performance (pre-, mid-, post-test)},scale=0.9]{sparc/perf}
 \imageframe[caption={Learning-related game actions}, scale=0.9]{sparc/d_eat}
 \imageframe[scale=0.9]{sparc/actions-supervised}
-\imageframe[caption={A diversity of actions selected by the robot},scale=0.9]{sparc/actions}
+\imageframe[scale=0.9]{sparc/actions}
 
-\imageframe[caption={Take-home message for joint-action}, scale=0.9]{sparc/sparc}
+\begin{frame}{Take-home message for joint action}
 
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{sparc/sparc}
+            \end{center}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{itemize}
+                \item this example is about tutoring, however {\bf progressively
+                    transferring autonomy} is a general principle
+                \item it works well for relatively high-dimensional problems
+                \item it also works for {\bf social behaviours}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+
+\end{frame}
 %\begin{frame}<1>[plain,label=whatsnext]{}
 %
 %    \begin{center}
@@ -361,26 +418,61 @@ communication}, Research on Language and Computation 2006}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section[Free play]{Social Dynamics of children's free play}
+\section[PInSoRo]{What about more subtle social dynamics?}
 
-%
-%\begin{frame}{Free play}
-%
-%    \begin{center}
-%    {\Large ``Just play! Enjoy yourselves!''}
-%    \end{center}
-%
-%    \vspace{3em}
-%
-%    \begin{itemize}
-%        \item \textbf{rich set of cognitive and
-%            social dynamics}; importance of motivation/drive; \textbf{uncertain
-%            and unexpected situations}
-%        \item what is the right action policy? Focus instead on the \textbf{social policy}
-%    \end{itemize}
-%
-%
-%\end{frame}
+\begin{frame}{To study social dynamics, we need...}
+
+    \pause
+
+    \begin{center}
+        A {\bf task}!
+    \end{center}
+    
+    \pause
+    ...that exhibits:
+
+    \begin{itemize}
+        \item complex social dynamics
+        \item open, underspecified situations
+        \item natural interactions
+        \item rich semantics
+        \item interplay of many socio-cognitive functions
+    \end{itemize}
+
+    \pause
+
+    while being...
+    \begin{itemize}
+        \item reproducible/replicable experimental procedure
+        \item clear quantitative metrics
+        \item practical
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Free play}
+
+    \begin{center}
+    {\Large ``Just play! Enjoy yourselves!''}
+    \end{center}
+
+    \vspace{3em}
+
+    \begin{itemize}
+        \item \textbf{rich set of cognitive and
+            social dynamics}; importance of motivation/drive; \textbf{uncertain
+            and unexpected situations}
+        \item what is the right action policy? Focus instead on the \textbf{social policy}
+    \end{itemize}
+    \pause
+    \begin{itemize}
+        \item focus on children
+        \item with a little bit of scaffolding \& framing
+    \end{itemize}
+
+
+\end{frame}
 %
 %\videoframe[0.56]{figs/freeplay/maud-zoe-pilot-edit.mkv?autostart&noaudio}
 %
@@ -455,28 +547,6 @@ communication}, Research on Language and Computation 2006}
 %
 %\imageframe[scale=0.9]{freeplay/setup_top}
 
-\begin{frame}{Freeplay sandox in a nutshell}
-
-    A task that exhibits...
-
-    \begin{itemize}
-        \item open, underspecified situations
-            \item complex social dynamics
-            \item natural interactions
-            \item rich semantics
-            \item interplay of many socio-cognitive functions
-    \end{itemize}
-
-    \pause
-
-    while being...
-    \begin{itemize}
-        \item reproducible/replicable experimental procedure
-        \item clear quantitative metrics
-        \item practical
-    \end{itemize}
-\end{frame}
-
 %
 %\begin{frame}{Social dynamics to be observed}
 %
@@ -544,7 +614,7 @@ communication}, Research on Language and Computation 2006}
     \end{itemize}
 
     \begin{center}
-        Open dataset: \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
+        Large open dataset: \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
     \end{center}
 \end{frame}
 %
@@ -577,8 +647,8 @@ touchscreen     & background drawing (RGB)                   & 4Hz              
                 & touches                                    & 6 points multi-touch, 10Hz                \\
                 & items position and orientation             & (x,y,theta), 10Hz                         \\ \midrule
 annotations     & \multicolumn{2}{l}{timestamped annotations of social behaviours} \\\midrule
-other           & \multicolumn{2}{l}{static transforms between touchscreen and facial cameras}           \\
-                & \multicolumn{2}{l}{cameras calibration informations}                                   \\ \bottomrule
++ post-process          & \multicolumn{2}{l}{optical flow, audio features}           \\
+                & \multicolumn{2}{l}{facial action units...}                                   \\ \bottomrule
 \end{tabular}
 
 \end{frame}
@@ -599,7 +669,11 @@ other           & \multicolumn{2}{l}{static transforms between touchscreen and f
 %\imageframe[color=black]{freeplay/rviz-faces}
 %\videoframe[0.56]{figs/optical_flow.mp4?autostart}
 
-\imageframe[scale=0.95,caption=13000+ annotations]{freeplay/coding-scheme}
+\begin{frame}{13000+ annotations}
+    \begin{center}
+        \includegraphics[width=0.8\linewidth]{freeplay/coding-scheme}
+    \end{center}
+\end{frame}
 
 \note{
 Coding scheme for social attitude derives from the Social Communication Coding System (SCCS) 
@@ -739,7 +813,7 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section[DNNs for Social Robotics]{Deep learning of social interactions?}
+\section[Data-driven social dynamics]{Towards data-driven social dynamics?}
 
 \videoframe[0.56]{figs/kinematics_social_dynamics/2017-06-13-140354392253-laugh.mp4}
 \videoframe[0.56]{figs/kinematics_social_dynamics/raw-2017-06-13-140354392253-laugh.mp4}
@@ -747,11 +821,47 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 \videoframe[1]{figs/kinematics_social_dynamics/2017-06-06-150808383862-fight.mp4}
 \videoframe[1]{figs/kinematics_social_dynamics/raw-2017-06-06-150808383862-fight.mp4}
 
+\begin{frame}{What do you see?}
+    \badge{maddy}
 
-\videoframe[0.56]{figs/annotations.mp4?autostart&start=10}
+    20 30-secs clips with a range of social situations; 200 participants on
+    m-turk.
+
+    t-test between skeleton only and full video-streams show no difference in
+    perception for the vast majority of the 11 tested constructs (cooperative, competitive, friendly,
+    sad, engaged,...).
+
+    \only<1>{
+    \begin{center}
+        \includegraphics[width=0.4\linewidth]{kinematics_social_dynamics/constructs-laughing}
+        \hspace{1cm}
+        \includegraphics[width=0.45\linewidth]{kinematics_social_dynamics/constructs-one-stops-other-play}
+    \end{center}
+
+    }
+    \only<2>{
+
+    {\bf $\Rightarrow$ 30-secs long sequences of body postures and facial landmarks
+    of dyads should be sufficient to recognise a social situation}
+    }
 
 
-\begin{frame}{Aim}
+\end{frame}
+
+\begin{frame}{Data crunching going on!}
+    \begin{center}
+        \includegraphics[width=0.35\linewidth]{pinsoronet/pinsoro-net-v2}
+        \includegraphics[width=0.6\linewidth]{pinsoronet/pinsoronet-v2-accuracy-social-attitude-task-engagement}
+    \end{center}
+
+    pytorch; trained on 10 epochs x 2M datapoints; {\bf WIP!!}
+\end{frame}
+
+
+%\videoframe[0.56]{figs/annotations.mp4?autostart&start=10}
+
+
+\begin{frame}{Ultimately...}
 
     {\bf Real-time identification} by the robot of...
 
@@ -779,10 +889,6 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 
     Social behaviours; Social dynamics: \textbf{generation as well!}
 \end{frame}
-
-\imageframe[caption=Simple RNN network]{pinsoronet/pinsoro-net-v2}
-\imageframe[caption=Trained on 10 epochs x 2M datapoints]{pinsoronet/pinsoronet-v2-accuracy-social-attitude-task-engagement}
-
 
 
 %{
@@ -1068,16 +1174,26 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Take home messages for today}
+\begin{frame}{Take-home messages for today}
 
-    \begin{itemize}
-        \item<+-> to reduce the socio-cognitive cost of collaboration, rely as much
-            as possible on {\bf implicit (sub-conscious) social mechanisms}
-        \item<+-> do not be scared of ambiguous/partially defined instructions
-        \item<+-> however, {\bf communication dynamics} \& the {\bf recognition of grounding
-            errors} should be research priorities
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            
+            \begin{center}
+                \includegraphics[width=0.9\linewidth]{joint-action-scenario-completed}
+            \end{center}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{itemize}
+                \item<+-> to reduce the socio-cognitive cost of collaboration, rely as much
+                    as possible on {\bf implicit (sub-conscious) social mechanisms}
+                \item<+-> do not be scared of ambiguous/partially defined instructions
+                \item<+-> however, {\bf communication dynamics} \& the {\bf recognition of grounding
+                    errors} should be research priorities
+            \end{itemize}
 
+        \end{column}
+    \end{columns}
 \end{frame}
 
 {
@@ -1086,16 +1202,24 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 
     \begin{columns}
         \begin{column}{0.5\linewidth}
+        \vspace{6cm}
+
+        \includegraphics[width=0.3\linewidth]{charlotte}
+        \hspace{0.1cm}
+        \includegraphics[width=0.3\linewidth]{emmanuel}
+
+        \includegraphics[width=0.3\linewidth]{chris}
+        \hspace{0.1cm}
+        \includegraphics[width=0.3\linewidth]{maddy}
+
         \end{column}
         \begin{column}{0.5\linewidth}
 
-    \vspace{7cm}
+    \vspace{6cm}
 \setbeamercolor{hriSec1Demo}{fg=white!70!black}
 \begin{beamercolorbox}[wd=\linewidth,ht=6ex,dp=0.7ex]{hriSec1Demo}
     \textbf{Thank you!}
 
-    \vspace{2em}
-    \href{https://freeplay-sandbox.github.io}{freeplay-sandbox.github.io}
 \end{beamercolorbox}
         \end{column}
     \end{columns}
@@ -1104,7 +1228,8 @@ Coding scheme for social attitude derives from the Social Communication Coding S
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Some more stuff}
+\miniframesoff
+\section[]{Some more stuff}
 \begin{frame}{Some building blocks exists}
 
     \begin{itemize}
